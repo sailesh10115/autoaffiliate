@@ -1,0 +1,2 @@
+# hecticteambot
+Discord HecTic Bot
