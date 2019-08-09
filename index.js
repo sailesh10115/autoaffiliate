@@ -34,7 +34,7 @@ client.on("guildDelete", guild => {
 
 client.on('guildMemberAdd', member => {
   // This Command Send Message When Someone Joins The Server
-  const channel = member.guild.channels.find(channel => channel.name === "general");
+  const channel = member.guild.channels.find(channel => channel.name === "┇join-leave");
   if (!channel) return;
   let membername = member.displayName
   let joineserverembed = new Discord.RichEmbed()
@@ -46,7 +46,7 @@ client.on('guildMemberAdd', member => {
 
 client.on('guildMemberRemove', member => {
   // This Command Send Message When Someone Joins The Server
-  const channel = member.guild.channels.find(channel => channel.name === "general");
+  const channel = member.guild.channels.find(channel => channel.name === "┇join-leave");
   if (!channel) return;
   let membername = member.displayName
   let leaveserverembed = new Discord.RichEmbed()
