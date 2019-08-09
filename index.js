@@ -83,7 +83,7 @@ client.on("message", async message => {
     if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('You Do Not Have Perms')
     let reason = args.slice(1).join(' ');
     let user = message.mentions.users.first();
-    let modlog = client.channels.find('name', 'general');
+    let modlog = client.channels.find('name', '┇mod-logs');
     let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');
     if (!modlog) return message.reply('I cannot find a mod-log channel').catch(console.error);
     if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
@@ -113,7 +113,7 @@ client.on("message", async message => {
     if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('You Do Not Have Perms')
     let reason = args.slice(1).join(' ');
     let user = message.mentions.users.first();
-    let modlog = client.channels.find('name', 'general');
+    let modlog = client.channels.find('name', '┇mod-logs');
     let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');
     if (!modlog) return message.reply('I cannot find a mod-log channel').catch(console.error);
     if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
