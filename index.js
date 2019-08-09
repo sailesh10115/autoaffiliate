@@ -40,6 +40,7 @@ client.on('guildMemberAdd', member => {
   let joineserverembed = new Discord.RichEmbed()
       .setTitle('\`\`\`HecTic Team Bot\`\`\`')
       .addField('Welcome To HecTic Team', `${membername} ; Please Read The Rules And The Message Sent To You By Mee6`)
+      .addField('Total Members', channel.guild.memberCount)
       .setColor("#15f153")
   channel.send(joineserverembed);   
 });
@@ -52,6 +53,7 @@ client.on('guildMemberRemove', member => {
   let leaveserverembed = new Discord.RichEmbed()
       .setTitle('\`\`\`HecTic Team Bot\`\`\`')
       .addField('Rip', `${membername}; Just Left The Server`)
+      .addField('Total Members', channel.guild.memberCount)
       .setColor(0xEA3007)
   channel.send(leaveserverembed);
 });
