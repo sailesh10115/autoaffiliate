@@ -1,16 +1,17 @@
 {
   "name": "discord-bot",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "node .": "node run index.js"
   },
-  "author": "HecTic",
+  "author": "EEE",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1",
     "ms": "^2.1.2"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }

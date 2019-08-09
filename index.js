@@ -34,16 +34,26 @@ client.on("guildDelete", guild => {
 
 client.on('guildMemberAdd', member => {
   // This Command Send Message When Someone Joins The Server
-  const channel = member.guild.channels.find(channel => channel.name === "┇join-leave");
+  const channel = member.guild.channels.find(channel => channel.name === "general");
   if (!channel) return;
-  channel.send(`Welcome To HecTic Community; ${member}; Please Read The Rules And The Message Sent To You By Mee6, For More Information DM @HecTic Slushie#3678`)
+  let membername = member.displayName
+  let joineserverembed = new Discord.RichEmbed()
+      .setTitle('\`\`\`HecTic Team Bot\`\`\`')
+      .addField('Welcome To HecTic Team', `${membername} ; Please Read The Rules And The Message Sent To You By Mee6`)
+      .setColor("#15f153")
+  channel.send(joineserverembed);   
 });
 
 client.on('guildMemberRemove', member => {
   // This Command Send Message When Someone Joins The Server
-  const channel = member.guild.channels.find(channel => channel.name === "┇join-leave");
+  const channel = member.guild.channels.find(channel => channel.name === "general");
   if (!channel) return;
-  channel.send(`Rip; ${member}; Just Left The Server`)
+  let membername = member.displayName
+  let leaveserverembed = new Discord.RichEmbed()
+      .setTitle('\`\`\`HecTic Team Bot\`\`\`')
+      .addField('Rip', `${membername}; Just Left The Server`)
+      .setColor(0xEA3007)
+  channel.send(leaveserverembed);
 });
 
 
@@ -69,6 +79,7 @@ client.on("message", async message => {
   if (command === "tempmute") {
     
   }
+  
   if (command === "serverinfo") {
     let sicon = message.guild.iconURL;
     let serverembed = new Discord.RichEmbed()
@@ -243,6 +254,7 @@ client.on("message", async message => {
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
+  
 });
 
 client.login(config.token);
