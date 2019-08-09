@@ -38,11 +38,11 @@ client.on('guildMemberAdd', member => {
   if (!channel) return;
   let membername = member.displayName
   let joineserverembed = new Discord.RichEmbed()
-      .setTitle('\`\`\`HecTic Team Bot\`\`\`')
-      .addField('Welcome To HecTic Team', `${membername} ; Please Read The Rules And The Message Sent To You By Mee6`)
-      .addField('Total Members', channel.guild.memberCount)
-      .setColor("#15f153")
-  channel.send(joineserverembed);   
+    .setTitle('\`\`\`HecTic Team Bot\`\`\`')
+    .addField('Welcome To HecTic Team', `${membername} ; Please Read The Rules And The Message Sent To You By Mee6`)
+    .addField('Total Members', channel.guild.memberCount)
+    .setColor("#15f153")
+  channel.send(joineserverembed);
 });
 
 client.on('guildMemberRemove', member => {
@@ -51,12 +51,13 @@ client.on('guildMemberRemove', member => {
   if (!channel) return;
   let membername = member.displayName
   let leaveserverembed = new Discord.RichEmbed()
-      .setTitle('\`\`\`HecTic Team Bot\`\`\`')
-      .addField('Rip', `${membername}; Just Left The Server`)
-      .addField('Total Members', channel.guild.memberCount)
-      .setColor(0xEA3007)
+    .setTitle('\`\`\`HecTic Team Bot\`\`\`')
+    .addField('Rip', `${membername}; Just Left The Server`)
+    .addField('Total Members', channel.guild.memberCount)
+    .setColor(0xEA3007)
   channel.send(leaveserverembed);
 });
+
 
 
 client.on("message", async message => {
@@ -78,10 +79,66 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   // Let's go with a few common example commands! Feel free to delete or change those.
-  if (command === "tempmute") {
-    
+  if (command === "mute") {
+    if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('You Do Not Have Perms')
+    let reason = args.slice(1).join(' ');
+    let user = message.mentions.users.first();
+    let modlog = client.channels.find('name', 'general');
+    let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');
+    if (!modlog) return message.reply('I cannot find a mod-log channel').catch(console.error);
+    if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
+    if (reason.length < 1) return message.reply('You must supply a reason for the mute.').catch(console.error);
+    if (message.mentions.users.size < 1) return message.reply('You must mention someone to mute them.').catch(console.error);
+    const embed = new Discord.RichEmbed()
+      .setColor(0x00AE86)
+      .setTimestamp()
+      .addField('Action:', 'Un/Mute')
+      .addField('User:', `${user.username}#${user.discriminator}`)
+      .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`);
+
+    if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply('I do not have the correct permissions.').catch(console.error);
+
+    if (message.guild.member(user).roles.has(muteRole.id)) {
+      message.guild.member(user).removeRole(muteRole).then(() => {
+        client.channels.get(modlog.id).sendEmbed(embed).catch(console.error);
+      });
+    } else {
+      message.guild.member(user).addRole(muteRole).then(() => {
+        client.channels.get(modlog.id).sendEmbed(embed).catch(console.error);
+      });
+    }
   }
-  
+
+  if (command === "unmute") {
+    if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('You Do Not Have Perms')
+    let reason = args.slice(1).join(' ');
+    let user = message.mentions.users.first();
+    let modlog = client.channels.find('name', 'general');
+    let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');
+    if (!modlog) return message.reply('I cannot find a mod-log channel').catch(console.error);
+    if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
+    if (reason.length < 1) return message.reply('You must supply a reason for the mute.').catch(console.error);
+    if (message.mentions.users.size < 1) return message.reply('You must mention someone to mute them.').catch(console.error);
+    const embed = new Discord.RichEmbed()
+      .setColor(0x00AE86)
+      .setTimestamp()
+      .addField('Action:', 'Un/Mute')
+      .addField('User:', `${user.username}#${user.discriminator}`)
+      .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`);
+
+    if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply('I do not have the correct permissions.').catch(console.error);
+
+    if (message.guild.member(user).roles.has(muteRole.id)) {
+      message.guild.member(user).removeRole(muteRole).then(() => {
+        client.channels.get(modlog.id).sendEmbed(embed).catch(console.error);
+      });
+    } else {
+      message.guild.member(user).addRole(muteRole).then(() => {
+        client.channels.get(modlog.id).sendEmbed(embed).catch(console.error);
+      });
+    }
+  }
+
   if (command === "serverinfo") {
     let sicon = message.guild.iconURL;
     let serverembed = new Discord.RichEmbed()
@@ -165,8 +222,8 @@ client.on("message", async message => {
     const embed = new Discord.RichEmbed()
       .setTitle('\`\`\`HecTic Team Bot\`\`\`')
       .addField('Prefix', 'h!')
-      .addField('Moderation', 'Kick, Ban, Clear, Addrole, Removerole')
-      .addField('Just 4 Fun', 'Avatar, Ping, Say, ServerInfo')
+      .addField('Moderation', 'Kick, Ban, Clear, Addrole, Removerole, Mute, Unmute')
+      .addField('Just 4 Fun', 'Avatar, Ping, Say, ServerInfo, Members')
       .addField('Fortnite / Apex Servers Only', 'Tryout')
       .addField('If Someone Has Been Bad, Report Them', 'Report')
       .addField('Version', '1.0.0.1')
@@ -256,7 +313,18 @@ client.on("message", async message => {
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
-  
+
+  if (command === "members") {
+    let sicon = message.guild.iconURL
+    let memberserverembed = new Discord.RichEmbed()
+      .addField("Total Members", message.guild.memberCount)
+      .addField("You Joined", message.member.joinedAt)
+      .setColor("#15f153")
+      .setThumbnail(sicon)
+
+    message.channel.send(memberserverembed);
+  }
+
 });
 
 client.login(config.token);
