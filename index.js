@@ -1,25 +1,25 @@
 const discord = require("discord.js");
-const nuke = new discord.Client();
+const finessegay = new discord.Client();
 
 
-nuke.on("ready", () => {
+finessegay.on("ready", () => {
     console.log("This bot has been developed by Fereker.")
     console.log(`${nuke.user.tag} is online.`);
     nuke.user.setPresence({ game: { name: `Auto Affiliate 0.6.7 :) | Servers: 11789` }, type: 0 });
 });
 
-nuke.on("guildCreate", guild => {
+finessegay.on("guildCreate", guild => {
     // This event triggers when the bot joins a guild.
     console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
 
 });
 
-nuke.on("guildDelete", guild => {
+finessegay.on("guildDelete", guild => {
     // this event triggers when the bot is removed from a guild.
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
 });
 
-nuke.on("message", async (msg) => {
+finessegay.on("message", async (msg) => {
     if (msg.content.toLowerCase().startsWith("!" + "setup")) {
         msg.channel.send("Welcome to Auto Affiliate, To Get Started Do The Command `!start`")
     }
@@ -138,4 +138,4 @@ nuke.on("message", async (msg) => {
 
 });
 
-nuke.login("NjY3MTQ1NTAwMTkzMDYyOTEz.XnFzJg.UIKGiVwQBFWjrEEPW6AmrcFJZgw");
+finessegay.login("NjY3MTQ1NTAwMTkzMDYyOTEz.XnFzJg.UIKGiVwQBFWjrEEPW6AmrcFJZgw");
